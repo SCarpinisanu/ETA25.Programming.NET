@@ -11,7 +11,7 @@ namespace Tema3
         [Test]
         public static void VerificareNumarParTest()
         {
-
+            VerificareNumar(-52);
         }
 
         static int VerificareNumar(int numarDeVerificat)
@@ -20,7 +20,15 @@ namespace Tema3
 
             if (numarDeVerificat % 2 = 0 & numarDeVerificat > 0)
             {
-                Console.WriteLine(""
+                Console.WriteLine($"Numarul {numarDeVerificat} este par pozitiv");
+            }
+            else if (numarDeVerificat % 2 = 0 & numarDeVerificat < 0)
+            {
+                Console.WriteLine($"Numarul {numarDeVerificat} este par negativ");
+            }
+            else
+            {
+                Console.WriteLine($"Numarul {numarDeVerificat} nu este par sau este zero");
             }
         }
     }
