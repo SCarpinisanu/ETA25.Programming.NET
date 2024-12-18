@@ -11,6 +11,7 @@ namespace Tema3
         [Test]
         public static void VerificareNumarParTest()
         {
+            //I will try to create a different approach later
             RezultatVerificare(49);
             RezultatVerificare(0);
             RezultatVerificare(-144);
