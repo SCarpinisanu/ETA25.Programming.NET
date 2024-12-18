@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,25 +11,29 @@ namespace Tema3
         [Test]
         public static void VerificareNumarParTest()
         {
-            VerificareNumar(-52);
+            RezultatVerificare(49);
+            RezultatVerificare(0);
+            RezultatVerificare(-144);
+            RezultatVerificare(44);
         }
 
-        static int VerificareNumar(int numarDeVerificat)
+        static int numarDeVerificat;
+        
+        private static void RezultatVerificare(int numarDeVerificat)
         {
-            static int numarDeVerificat;
-
-            if (numarDeVerificat % 2 = 0 & numarDeVerificat > 0)
+            if (numarDeVerificat % 2 == 0 & numarDeVerificat > 0)
             {
-                Console.WriteLine($"Numarul {numarDeVerificat} este par pozitiv");
+                Console.WriteLine($"Numarul {numarDeVerificat} este par pozitiv.");
             }
-            else if (numarDeVerificat % 2 = 0 & numarDeVerificat < 0)
+            else if (numarDeVerificat % 2 == 0 & numarDeVerificat < 0)
             {
-                Console.WriteLine($"Numarul {numarDeVerificat} este par negativ");
+                Console.WriteLine($"Numarul {numarDeVerificat} este par negativ.");   
             }
             else
             {
-                Console.WriteLine($"Numarul {numarDeVerificat} nu este par sau este zero");
+                Console.WriteLine($"Numrul {numarDeVerificat} nu este par.");  
             }
         }
+
     }
 }
