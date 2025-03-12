@@ -1,0 +1,86 @@
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
+using System.Text.RegularExpressions;
+using System.Threading;
+
+namespace UltimaTema
+{
+    public class UltimaTemaClass
+    {
+        private IWebDriver driver;
+
+        [SetUp]
+        public void Setup()
+        {
+            driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl("https://demoqa.com");
+        }
+
+        [Test]
+        public void TestAccordian()
+        {
+            // Click pe "Widgets"
+            IWebElement widgetsLink = driver.FindElement(By.XPath("//h5[text()='Widgets']"));
+            widgetsLink.Click();
+            Thread.Sleep(1000);
+
+            // Click pe "Accordian"
+            IWebElement accordianLink = driver.FindElement(By.XPath("//span[text()='Accordian']"));
+            accordianLink.Click();
+            Thread.Sleep(1000);
+
+            // Click pe "section1Heading"
+            IWebElement section1 = driver.FindElement(By.Id("section1Heading"));
+            section1.Click();
+            Thread.Sleep(1000);
+            CheckTextExists("Aldus PageMaker");
+
+            IWebElement paragraph = driver.FindElement(By.TagName("p"));
+            string text = paragraph.Text;
+
+            // Numărare cuvinte
+            int wordCount = Regex.Matches(text, @"\b\w+\b").Count;
+
+            // Afișează rezultatele
+            Console.WriteLine($"Număr de cuvinte: {wordCount}");
+
+            // Click pe "section2Heading"
+            IWebElement section2 = driver.FindElement(By.Id("section2Heading"));
+            section2.Click();
+            Thread.Sleep(1000);
+            CheckTextExists("Richard McClintock False");
+
+            IJavaScriptExecutor jsscroll = (IJavaScriptExecutor)driver;
+            jsscroll.ExecuteScript("window.scrollTo(0,1000)");
+
+            // Click pe "section3Heading"
+            IWebElement section3 = driver.FindElement(By.Id("section3Heading"));
+            section3.Click();
+            Thread.Sleep(1000);
+            CheckTextExists("Lorem Ipsum");
+        }
+
+        private void CheckTextExists(string text)
+        {
+            if (driver.PageSource.Contains(text))
+            {
+                Console.WriteLine($"Textul '{text}' a fost găsit.");
+            }
+            else
+            {
+                Console.WriteLine($"Textul '{text}' nu a fost găsit.");
+            }
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Thread.Sleep(2000);
+            driver.Quit();
+            driver.Dispose();
+        }
+    }
+}

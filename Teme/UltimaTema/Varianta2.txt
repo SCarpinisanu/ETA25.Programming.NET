@@ -1,0 +1,88 @@
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
+using System.Text.RegularExpressions;
+using System.Threading;
+
+namespace SeleniumTests
+{
+    public class DemoQATests
+    {
+        private IWebDriver driver;
+
+        [SetUp]
+        public void Setup()
+        {
+            driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl("https://demoqa.com");
+        }
+
+        [Test]
+        public void TestAccordian()
+        {
+            // Click pe "Widgets"
+            IWebElement widgetsLink = driver.FindElement(By.XPath("//h5[text()='Widgets']"));
+            widgetsLink.Click();
+            Thread.Sleep(1000);
+
+            // Click pe "Accordian"
+            IWebElement accordianLink = driver.FindElement(By.XPath("//span[text()='Accordian']"));
+            accordianLink.Click();
+            Thread.Sleep(1000);
+
+            // Click pe "section1Heading"
+            IWebElement section1 = driver.FindElement(By.Id("section1Heading"));
+            section1.Click();
+            Thread.Sleep(1000);
+            CheckTextExists("Aldus PageMaker");
+            CountWordsInParagraph();
+
+            // Click pe "section2Heading"
+            IWebElement section2 = driver.FindElement(By.Id("section2Heading"));
+            section2.Click();
+            Thread.Sleep(1000);
+            CheckTextExists("Richard McClintock");
+            CountWordsInParagraph();
+
+            // Scroll în pagină
+            ((IJavaScriptExecutor)driver).ExecuteScript("window.scrollBy(0,200)");
+            Thread.Sleep(1000);
+
+            // Click pe "section3Heading"
+            IWebElement section3 = driver.FindElement(By.Id("section3Heading"));
+            section3.Click();
+            Thread.Sleep(1000);
+            CheckTextExists("Lorem Ipsum Factum");
+            CountWordsInParagraph();
+        }
+
+        private void CheckTextExists(string text)
+        {
+            if (driver.PageSource.Contains(text))
+            {
+                Console.WriteLine($"Textul '{text}' a fost găsit.");
+            }
+            else
+            {
+                Console.WriteLine($"Textul '{text}' nu a fost găsit.");
+            }
+        }
+
+        private void CountWordsInParagraph()
+        {
+            IWebElement paragraph = driver.FindElement(By.TagName("p"));
+            string text = paragraph.Text;
+            int wordCount = Regex.Matches(text, "\\b\\w+\\b").Count;
+            Console.WriteLine($"Număr de cuvinte în paragraf: {wordCount}");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Thread.Sleep(2000);
+            driver.Quit();
+        }
+    }
+}
